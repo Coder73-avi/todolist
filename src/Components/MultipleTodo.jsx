@@ -6,12 +6,14 @@ function MultipleTodo() {
     { id: 2, name: "banana" },
     { id: 3, name: "apple" },
   ]);
-  const [data, setData] = useState({
+  const [emptyObjState, setObjState] = useState({
     name: "",
     price: "",
     category: "",
     other: "",
   });
+  // const emptyObj = { name: "", price: "", category: "", other: "" };
+  const [data, setData] = useState(objState);
   // const [updateStatus, setUpdateStatus] = useState(false);
   // const [updateId, setUpdateId] = useState(null);
 
@@ -87,12 +89,7 @@ function MultipleTodo() {
   };
 
   const addNew = () => {
-    setData({
-      name: "",
-      price: "",
-      category: "",
-      other: "",
-    });
+    setData(emptyObjState);
     // setUpdateId(null);
     // return setUpdateStatus(false);
     return;
