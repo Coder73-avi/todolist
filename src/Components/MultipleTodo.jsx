@@ -1,145 +1,237 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function MultipleTodo() {
-  const [itemList, setItemList] = useState([{id:1, name:"mango"}, {id:2, name:"banana"}, {id:3,name:"apple"}])
+  const [itemList, setItemList] = useState([
+    { id: 1, name: "mango" },
+    { id: 2, name: "banana" },
+    { id: 3, name: "apple" },
+  ]);
   const [data, setData] = useState({
-    name:"",
-    price:"",
-    category:"",
-    other:"", 
-   
-  })
-  const [updateStatus, setUpdateStatus] = useState(false)
-  const [updateId, setUpdateId] = useState(null)
+    name: "",
+    price: "",
+    category: "",
+    other: "",
+  });
+  // const [updateStatus, setUpdateStatus] = useState(false);
+  // const [updateId, setUpdateId] = useState(null);
 
-  const getDate = () =>{
+  const getDate = () => {
     const d = new Date();
     const day = d.getDate();
     const mm = d.getMonth() + 1;
 
-    return `${day}/${mm} `
-  }
+    return `${day}/${mm} `;
+  };
 
-  const addItem = (e) =>{
+  const addItem = (e) => {
     e.preventDefault();
-    const check = itemList?.find((val)=> val.name?.toLowerCase() === data?.name?.toLowerCase() )
-    if(check) return alert("Already exist !!!!")
+    const check = itemList?.find(
+      (val) => val.name?.toLowerCase() === data?.name?.toLowerCase(),
+    );
+    if (check) return alert("Already exist !!!!");
     const date = getDate();
-   
-    console.log(">>>", data)
 
-     setItemList([...itemList, {id:generateUUID(9),createDate:date, updateDate:date, ...data}])
-     return addNew();
-  }
+    console.log(">>>", data);
 
-  const inputHandle = (e) =>{
+    setItemList([
+      ...itemList,
+      { id: generateUUID(9), createDate: date, updateDate: date, ...data },
+    ]);
+    return addNew();
+  };
+
+  const inputHandle = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setData({...data, [name]:value})
-  }
+    setData({ ...data, [name]: value });
+  };
 
   const generateUUID = (digits) => {
-    let str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXZ';
+    let str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXZ";
     let uuid = [];
     for (let i = 0; i < digits; i++) {
-        uuid.push(str[Math.floor(Math.random() * str.length)]);
+      uuid.push(str[Math.floor(Math.random() * str.length)]);
     }
-    return uuid.join('');
-}
+    return uuid.join("");
+  };
 
-  const updateItem = (e, indx) => {
-      e.preventDefault();
-      const check = itemList?.find((val)=> val.id === updateId )
-      if(!check) return alert("Item doesnot exist !!!!")
+  const updateItem = (e, id) => {
+    e.preventDefault();
+    const check = itemList?.find((val) => val.id === id);
+    if (!check) return alert("Item doesnot exist !!!!");
 
-      const newUpdateData = itemList?.map((item)=>{
-        if(item.id === updateId) {
-          return {...data, updateDate:getDate()}
-        }
-        return item;
-      })
+    const newUpdateData = itemList?.map((item) => {
+      if (item.id === id) {
+        return { ...data, updateDate: getDate() };
+      }
+      return item;
+    });
 
-      setItemList(newUpdateData)
-      alert("update successfully !!!")
-
-  }
+    setItemList(newUpdateData);
+    alert("update successfully !!!");
+  };
 
   const editItem = (id) => {
-      const getData = itemList?.find((item)=> item.id === id);
-      console.log(id, getData)
-      setUpdateId(id)
-      setUpdateStatus(true)
-      return setData(getData)
-  }
+    const getData = itemList?.find((item) => item.id === id);
+    console.log(id, getData);
+    // setUpdateId(id)
+    // setUpdateStatus(true)
+    return setData(getData);
+  };
 
-  const deleteItem = (id) =>{
-    if(id === updateId) return alert("You cann't delete this item, it's updating !!!")
+  const deleteItem = (id) => {
+    if (id === data?.id)
+      return alert("You cann't delete this item, it's updating !!!");
 
-    return setItemList(itemList.filter((val, indx)=> val.id !== id))
-  }
+    return setItemList(itemList.filter((val, indx) => val.id !== id));
+  };
 
-const addNew = () =>{
-  setData({ 
-    name:"",
-    price:"",
-    category:"",
-    other:"", 
-});
-  setUpdateId(null);
-  return setUpdateStatus(false)
-}
-
+  const addNew = () => {
+    setData({
+      name: "",
+      price: "",
+      category: "",
+      other: "",
+    });
+    // setUpdateId(null);
+    // return setUpdateStatus(false);
+    return;
+  };
 
   return (
     <main className="App">
-      <section className='w-[60%] border mx-auto rounded-md my-5 p-4'>
-        <h1 className='text-2xl font-bold text-center mb-4'>Multiple Todo List !!!</h1>
-        <form className='flex flex-col justify-center  gap-4'>
-            <input type="text" name="name" id="" placeholder='Item Name' className='border rounded-md outline-none text-sm px-3 py-2 ' onChange={inputHandle} value={data?.name} />
-            <div className='grid md:grid-cols-3 gap-4'>
-                <input type="number" name="price" id="" placeholder='Price' className='border rounded-md outline-none text-sm px-3 py-2 ' onChange={inputHandle} value={data?.price} />
-                <input type="text" name="category" id="" placeholder='Category' className='border rounded-md outline-none text-sm px-3 py-2 ' onChange={inputHandle} value={data?.category} />
-                <input type="text" name="other" id="" placeholder='Other' className='border rounded-md outline-none text-sm px-3 py-2 ' onChange={inputHandle} value={data?.other} />
-            </div>
-          
-          <button className="px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-md" onClick={(updateStatus) ? updateItem : addItem}>{(updateStatus) ? "Update" : "Add"}</button>
-          {updateStatus ?  <button className='px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-md' onClick={addNew}>Add New</button> : null}
+      <section className="w-[60%] border mx-auto rounded-md my-5 p-4">
+        <h1 className="text-2xl font-bold text-center mb-4">
+          Multiple Todo List !!!
+        </h1>
+        <form className="flex flex-col justify-center  gap-4">
+          <input
+            type="text"
+            name="name"
+            id=""
+            placeholder="Item Name"
+            className="border rounded-md outline-none text-sm px-3 py-2 "
+            onChange={inputHandle}
+            value={data?.name}
+          />
+          <div className="grid md:grid-cols-3 gap-4">
+            <input
+              type="number"
+              name="price"
+              id=""
+              placeholder="Price"
+              className="border rounded-md outline-none text-sm px-3 py-2 "
+              onChange={inputHandle}
+              value={data?.price}
+            />
+            <input
+              type="text"
+              name="category"
+              id=""
+              placeholder="Category"
+              className="border rounded-md outline-none text-sm px-3 py-2 "
+              onChange={inputHandle}
+              value={data?.category}
+            />
+            <input
+              type="text"
+              name="other"
+              id=""
+              placeholder="Other"
+              className="border rounded-md outline-none text-sm px-3 py-2 "
+              onChange={inputHandle}
+              value={data?.other}
+            />
+          </div>
+
+          <button
+            className="px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-md"
+            onClick={data?.id ? (e) => updateItem(e, data?.id) : addItem}
+          >
+            {data?.id ? "Update" : "Add"}
+          </button>
+          {data?.id ? (
+            <button
+              className="px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-md"
+              onClick={addNew}
+            >
+              Add New
+            </button>
+          ) : null}
         </form>
 
-        <div className=''>
-          <table className='w-full text-left'>
+        <div className="">
+          <table className="w-full text-left">
             <thead className="text-sm font-bold border-b">
-                <tr>
-                    <th scope='col' className='px-2 py-2'>Id</th>
-                    <th scope='col' className='px-2 py-2'>Items Name</th>
-                    <th scope='col' className='px-2 py-2'>Price</th>
-                    <th scope='col' className='px-2 py-2'>Category</th>
-                    <th scope='col' className='px-2 py-2'>Other</th>
-                    <th scope='col' className='px-2 py-2'>Create</th>
-                    <th scope='col' className='px-2 py-2'>Update</th>
-                    <th scope='col' className='px-2 py-2'>Action</th>
-                </tr>
+              <tr>
+                <th scope="col" className="px-2 py-2">
+                  Id
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Items Name
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Price
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Category
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Other
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Create
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Update
+                </th>
+                <th scope="col" className="px-2 py-2">
+                  Action
+                </th>
+              </tr>
             </thead>
-            <tbody className='text-sm'>
-            {itemList?.map((item, indx)=>{
-              return (
-                <tr key={indx} className=" border-b text-black mb-2 rounded-md">
-                    <td className='capitalize px-2 py-2'>{item?.id}</td>
-                    <td className='capitalize px-2 py-2'>{item?.name || "none"}</td>
-                    <td className='capitalize px-2 py-2'>{item?.price || "none"}</td>
-                    <td className='capitalize px-2 py-2'>{item?.category || "none"}</td>
-                    <td className='capitalize px-2 py-2'>{item?.other || "none"}</td>
-                    <td className='capitalize px-2 py-2'>{item?.createDate || "none"}</td>
-                    <td className='capitalize px-2 py-2'>{item?.updateDate || "none"}</td>
-                    <td className='capitalize px-2 py-2'>
-                        <div className='flex flex-row justify-between gap-2 items-center capitalize text-blue-800 cursor-pointer'>
-                            <span title="Edit" onClick={()=>editItem(item?.id)}>edit</span>
-                            <span title='Delete' onClick={()=>deleteItem(item?.id)}>delete</span>
-                        </div>
+            <tbody className="text-sm">
+              {itemList?.map((item, indx) => {
+                return (
+                  <tr
+                    key={indx}
+                    className=" border-b text-black mb-2 rounded-md"
+                  >
+                    <td className="capitalize px-2 py-2">{item?.id}</td>
+                    <td className="capitalize px-2 py-2">
+                      {item?.name || "none"}
                     </td>
-                 </tr>
-              )
-            })}
+                    <td className="capitalize px-2 py-2">
+                      {item?.price || "none"}
+                    </td>
+                    <td className="capitalize px-2 py-2">
+                      {item?.category || "none"}
+                    </td>
+                    <td className="capitalize px-2 py-2">
+                      {item?.other || "none"}
+                    </td>
+                    <td className="capitalize px-2 py-2">
+                      {item?.createDate || "none"}
+                    </td>
+                    <td className="capitalize px-2 py-2">
+                      {item?.updateDate || "none"}
+                    </td>
+                    <td className="capitalize px-2 py-2">
+                      <div className="flex flex-row justify-between gap-2 items-center capitalize text-blue-800 cursor-pointer">
+                        <span title="Edit" onClick={() => editItem(item?.id)}>
+                          edit
+                        </span>
+                        <span
+                          title="Delete"
+                          onClick={() => deleteItem(item?.id)}
+                        >
+                          delete
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
