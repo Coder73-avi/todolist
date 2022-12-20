@@ -10,10 +10,13 @@ function MultipleTodo() {
     name: "",
     price: "",
     category: "",
-    other: "",
+    address: {
+      country: "",
+      city: "",
+    },
   });
   // const emptyObj = { name: "", price: "", category: "", other: "" };
-  const [data, setData] = useState(objState);
+  const [data, setData] = useState(emptyObjState);
   // const [updateStatus, setUpdateStatus] = useState(false);
   // const [updateId, setUpdateId] = useState(null);
 
@@ -42,10 +45,13 @@ function MultipleTodo() {
     return addNew();
   };
 
-  const inputHandle = (e) => {
+  const inputHandle = (e, nested = null) => {
     const name = e.target.name;
     const value = e.target.value;
-    setData({ ...data, [name]: value });
+    if (nested) {
+      return setData({ ...data, [nested]: { ...data[nested], [name]: value } });
+    }
+    return setData({ ...data, [name]: value });
   };
 
   const generateUUID = (digits) => {
@@ -132,12 +138,21 @@ function MultipleTodo() {
             />
             <input
               type="text"
-              name="other"
+              name="country"
               id=""
-              placeholder="Other"
+              placeholder="Country"
               className="border rounded-md outline-none text-sm px-3 py-2 "
-              onChange={inputHandle}
-              value={data?.other}
+              onChange={(e) => inputHandle(e, "address")}
+              value={data?.address?.country}
+            />
+            <input
+              type="text"
+              name="city"
+              id=""
+              placeholder="City"
+              className="border rounded-md outline-none text-sm px-3 py-2 "
+              onChange={(e) => inputHandle(e, "address")}
+              value={data?.address?.city}
             />
           </div>
 
@@ -174,7 +189,7 @@ function MultipleTodo() {
                   Category
                 </th>
                 <th scope="col" className="px-2 py-2">
-                  Other
+                  Address
                 </th>
                 <th scope="col" className="px-2 py-2">
                   Create
@@ -205,7 +220,7 @@ function MultipleTodo() {
                       {item?.category || "none"}
                     </td>
                     <td className="capitalize px-2 py-2">
-                      {item?.other || "none"}
+                      {item?.address?.city},{item?.address?.country || "none"}
                     </td>
                     <td className="capitalize px-2 py-2">
                       {item?.createDate || "none"}
