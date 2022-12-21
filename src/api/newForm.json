@@ -1,0 +1,9 @@
+{
+  "inputFiled": [
+    { "name": "fullname", "type": "text" },
+    { "name": "email", "type": "email" },
+    { "name": "country", "type": "text" },
+    { "name": "city", "type": "text" },
+    { "name": "phonenumber", "type": "number" }
+  ]
+}
