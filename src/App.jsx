@@ -1,14 +1,16 @@
-import './App.css';
-import MultipleTodo from './Components/MultipleTodo';
-import SingleTodo from './Components/SingleTodo';
+import "./App.css";
+import JsonForm from "./Components/JsonForm";
+import MultipleTodo from "./Components/MultipleTodo";
+import SingleTodo from "./Components/SingleTodo";
 
 function App() {
-  return(
+  return (
     <>
       {/* <SingleTodo /> */}
-      <MultipleTodo />
+      {/* <MultipleTodo /> */}
+      <JsonForm />
     </>
-  )
+  );
 }
 
 export default App;

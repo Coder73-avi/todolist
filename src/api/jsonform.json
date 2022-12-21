@@ -1,0 +1,21 @@
+{
+  "inputFiled": [
+    {
+      "name": "item_name",
+      "type": "text",
+      "nested": false
+    },
+    { "name": "price", "type": "number", "nested": false },
+    { "name": "category", "type": "text", "nested": false },
+    {
+      "name": "address",
+      "nested": [
+        {
+          "name": "country",
+          "type": "text"
+        },
+        { "name": "city", "type": "text" }
+      ]
+    }
+  ]
+}
