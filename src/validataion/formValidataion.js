@@ -73,7 +73,7 @@ export const validataion = (data) => {
 };
 
 const charType = ({ name, char, value, capitalizeName }) => {
-  const textOnly = /[^a-z]/gi;
+  const textOnly = /[^a-z\s]/gi;
   const textAndNumberOnly = /[^a-z0-9]/gi;
   const numberOnly = /[^0-9]/gi;
   const emailOnly = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -100,7 +100,7 @@ const charType = ({ name, char, value, capitalizeName }) => {
   }
 };
 
-const matchData = ({ name, char,  capitalizeName, newData }) => {
+const matchData = ({ name, char, capitalizeName, newData }) => {
   console.log("match >> ", newData);
   if (char === newData) return;
   return { [name]: `${capitalizeName} does not match !!!` };
