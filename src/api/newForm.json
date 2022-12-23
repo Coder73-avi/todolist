@@ -1,9 +1,56 @@
 {
   "inputFiled": [
-    { "name": "fullname", "type": "text" },
-    { "name": "email", "type": "email" },
-    { "name": "country", "type": "text" },
-    { "name": "city", "type": "text" },
-    { "name": "phonenumber", "type": "number" }
+    {
+      "name": "fullname",
+      "type": "text",
+      "valid": {
+        "required": true,
+        "type": "text",
+        "min": 3,
+        "max": 16
+      }
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "valid": {
+        "required": true,
+        "type": "email"
+      }
+    },
+    {
+      "name": "country",
+      "type": "text",
+      "valid": {
+        "required": true,
+        "type": "text"
+      }
+    },
+    {
+      "name": "city",
+      "type": "text",
+      "valid": { "required": true, "type": "text" }
+    },
+    {
+      "name": "phone_number",
+      "type": "number",
+      "valid": { "required": true, "type": "number", "min": 8, "max": 15 }
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "valid": { "required": true, "type": "password", "min": 4, "max": 32 }
+    },
+    {
+      "name": "confirm_password",
+      "type": "password",
+      "valid": {
+        "required": true,
+        "type": "password",
+        "min": 4,
+        "max": 32,
+        "match": "password"
+      }
+    }
   ]
 }
