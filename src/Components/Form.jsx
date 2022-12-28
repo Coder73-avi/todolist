@@ -5,7 +5,6 @@ import { validataion } from "../validataion/formValidataion";
 
 const Form = () => {
   // const [itemList, setItemList] = useState([]);
-  const [emptyObjState, setEmptyObjState] = useState({});
   const [errors, setErrors] = useState({});
 
   // const emptyObj = { name: "", price: "", category: "", other: "" };
@@ -19,7 +18,6 @@ const Form = () => {
   const getEmptyObj = useCallback(() => {
     return JsonData?.inputFiled.map(({ name }) => {
       let obj = { [name]: "" };
-      setEmptyObjState((prev) => ({ ...prev, ...obj }));
       setData((prev) => ({ ...prev, ...obj }));
       return true;
     });
@@ -33,8 +31,15 @@ const Form = () => {
   const inputHandle = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    const newObj = { [name]: value };
+    setData({ ...data, ...newObj });
 
-    return setData({ ...data, [name]: value });
+    const check = validataion(newObj);
+    if (Object.keys(check).length !== 0) {
+      return setErrors({ ...errors, ...check });
+    }
+
+    return delete errors[name];
   };
 
   const onSubmitBtn = (e) => {

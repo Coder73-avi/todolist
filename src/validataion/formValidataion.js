@@ -1,23 +1,28 @@
 import JsonData from "../api/newForm.json";
 
 export const validataion = (data) => {
+  console.log(data);
   let errors = {};
   const { inputFiled } = JsonData;
 
-  inputFiled.forEach((item) => {
-    const { name, valid } = item;
+  const dataObj = Object.keys(data);
+
+  dataObj.forEach((name) => {
     const char = data[name];
     const capitalizeName = name[0]
-      .toUpperCase()
-      .concat(name.slice(1))
-      .replaceAll("_", " ");
-
-    const newValid = Object.keys(valid);
-    for (let i = 0; i < newValid.length; i++) {
-      const key = newValid[i];
-      const value = valid[key];
+      ?.toUpperCase()
+      ?.concat(name.slice(1))
+      ?.replaceAll("_", " ");
+    console.log(capitalizeName);
+    const findValidataionRequired = inputFiled.find(
+      (item) => item?.name === name,
+    );
+    const validObject = Object.keys(findValidataionRequired.valid);
+    for (let i = 0; i < validObject.length; i++) {
       // console.log(key, "=>", value);
-
+      const key = validObject[i];
+      const value = findValidataionRequired?.valid?.[key];
+      console.log(value);
       switch (key) {
         case "required":
           if (char === "") {
@@ -27,7 +32,6 @@ export const validataion = (data) => {
             });
           }
           break;
-
         case "min":
           if (char.length < value) {
             return (errors = {
@@ -36,7 +40,6 @@ export const validataion = (data) => {
             });
           }
           break;
-
         case "max":
           if (key === "max" && char.length > value) {
             return (errors = {
@@ -45,22 +48,19 @@ export const validataion = (data) => {
             });
           }
           break;
-
         case "type":
           errors = {
             ...errors,
             ...charType({ name, char, value, capitalizeName }),
           };
           break;
-
         case "match":
-          const newData = data[value];
+          const newData = data[name];
           errors = {
             ...errors,
             ...matchData({ name, char, capitalizeName, newData }),
           };
           break;
-
         default:
           return errors;
       }
