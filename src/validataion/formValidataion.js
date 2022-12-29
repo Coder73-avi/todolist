@@ -1,6 +1,6 @@
 import JsonData from "../api/newForm.json";
 
-export const validataion = (data, allData) => {
+export const validataion = (data, allData = null) => {
   // console.log(data);
   let errors = {};
   const { inputFiled } = JsonData;
@@ -55,7 +55,12 @@ export const validataion = (data, allData) => {
           };
           break;
         case "match":
-          const newData = allData[value];
+          let newData;
+          if (allData) {
+            newData = allData[value];
+          } else {
+            newData = data[value];
+          }
           console.log(data, newData);
           errors = {
             ...errors,

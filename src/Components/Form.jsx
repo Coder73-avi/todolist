@@ -13,18 +13,18 @@ const Form = ({ JsonData, data, setData }) => {
   const lableClassName =
     "mb-2 text-sm font-bold text-gray-900 dark:text-white capitalize";
 
-  const getEmptyObj = useCallback(() => {
-    return JsonData?.inputFiled.map(({ name, type }) => {
-      let obj = { [name]: type };
-      setData((prev) => ({ ...prev, ...obj }));
-      return true;
-    });
-  }, [JsonData?.inputFiled, setData]);
-  // console.log(">>data >>", data);
+  // const getEmptyObj = useCallback(() => {
+  //   return JsonData?.inputFiled.map(({ name, type }) => {
+  //     let obj = { [name]: "" };
+  //     setData((prev) => ({ ...prev, ...obj }));
+  //     return true;
+  //   });
+  // }, [JsonData?.inputFiled, setData]);
+  // // console.log(">>data >>", data);
 
-  useEffect(() => {
-    if (Object.keys(data).length === 0) getEmptyObj();
-  }, [data, getEmptyObj]);
+  // useEffect(() => {
+  //   if (Object.keys(data).length === 0) getEmptyObj();
+  // }, [data, getEmptyObj]);
 
   const inputHandle = (e) => {
     const name = e.target.name;
@@ -44,9 +44,10 @@ const Form = ({ JsonData, data, setData }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const check = validataion(data);
-    if (Object.keys(check).length !== 0) setErrors(check);
-    console.log(check);
+    if (Object.keys(errors).length !== 0)
+      return alert("Plz fixed the validataion");
+
+    return alert("Data submitted !!!");
   };
   // const generateID = () => {
   //   if (itemList.length === 0) return 1;
@@ -84,7 +85,7 @@ const Form = ({ JsonData, data, setData }) => {
                     type={type}
                     name={name.toLowerCase()}
                     id={name}
-                    value={data?.[name]}
+                    value={data?.[name] || ""}
                     placeholder={name.replaceAll("_", " ")}
                     className={inputClassName}
                     onChange={inputHandle}
