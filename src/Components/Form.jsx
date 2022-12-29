@@ -46,6 +46,7 @@ const Form = ({ JsonData, data, setData }) => {
     e.preventDefault();
     if (Object.keys(errors).length !== 0)
       return alert("Plz fixed the validataion");
+    if (Object.keys(data).length === 0) return alert("Fill the empty area !!");
 
     return alert("Data submitted !!!");
   };
@@ -72,7 +73,7 @@ const Form = ({ JsonData, data, setData }) => {
           onSubmit={onSubmit}
         >
           <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
-            {JsonData?.inputFiled?.map(({ name, type }, indx) => {
+            {JsonData?.inputFiled?.map(({ name, type, valid }, indx) => {
               return (
                 <div key={indx} className="">
                   <div className="flex flex-row gap-2 items-center flex-wrap">
@@ -89,6 +90,7 @@ const Form = ({ JsonData, data, setData }) => {
                     placeholder={name.replaceAll("_", " ")}
                     className={inputClassName}
                     onChange={inputHandle}
+                    required={valid?.required || false}
                   />
                 </div>
               );
