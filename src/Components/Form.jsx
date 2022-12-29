@@ -1,14 +1,11 @@
-import { CssSyntaxError } from "postcss";
-import React, { useCallback, useEffect, useState } from "react";
-import JsonData from "../api/newForm.json";
+import React, { useCallback, useEffect } from "react";
+// import JsonData from "../api/newForm.json";
 import { validataion } from "../validataion/formValidataion";
 
-const Form = () => {
+const Form = ({ JsonData, data, setData, errors, setErrors, onSubmit }) => {
   // const [itemList, setItemList] = useState([]);
-  const [errors, setErrors] = useState({});
 
   // const emptyObj = { name: "", price: "", category: "", other: "" };
-  const [data, setData] = useState({});
 
   const inputClassName =
     "bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:capitalize";
@@ -21,7 +18,7 @@ const Form = () => {
       setData((prev) => ({ ...prev, ...obj }));
       return true;
     });
-  }, []);
+  }, [JsonData?.inputFiled, setData]);
   // console.log(">>data >>", data);
 
   useEffect(() => {
@@ -42,12 +39,7 @@ const Form = () => {
     return delete errors[name];
   };
 
-  const onSubmitBtn = (e) => {
-    e.preventDefault();
-    const check = validataion(data);
-    if (Object.keys(check).length !== 0) setErrors(check);
-    console.log(check);
-  };
+ 
 
   // const generateID = () => {
   //   if (itemList.length === 0) return 1;
@@ -69,7 +61,7 @@ const Form = () => {
         <form
           className="flex flex-col justify-center  gap-4"
           method="post"
-          onSubmit={onSubmitBtn}
+          onSubmit={onSubmit}
         >
           <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
             {JsonData?.inputFiled?.map(({ name, type }, indx) => {
