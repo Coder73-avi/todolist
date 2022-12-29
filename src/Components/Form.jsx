@@ -14,8 +14,8 @@ const Form = ({ JsonData, data, setData }) => {
     "mb-2 text-sm font-bold text-gray-900 dark:text-white capitalize";
 
   const getEmptyObj = useCallback(() => {
-    return JsonData?.inputFiled.map(({ name }) => {
-      let obj = { [name]: "" };
+    return JsonData?.inputFiled.map(({ name, type }) => {
+      let obj = { [name]: type };
       setData((prev) => ({ ...prev, ...obj }));
       return true;
     });
@@ -23,8 +23,8 @@ const Form = ({ JsonData, data, setData }) => {
   // console.log(">>data >>", data);
 
   useEffect(() => {
-    getEmptyObj();
-  }, [getEmptyObj]);
+    if (Object.keys(data).length === 0) getEmptyObj();
+  }, [data, getEmptyObj]);
 
   const inputHandle = (e) => {
     const name = e.target.name;
