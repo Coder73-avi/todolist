@@ -44,9 +44,13 @@ const Form = ({ JsonData, data, setData }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (Object.keys(errors).length !== 0)
-      return alert("Plz fixed the validataion");
-    if (Object.keys(data).length === 0) return alert("Fill the empty area !!");
+    const check = validataion(data);
+    if (Object.keys(check).length !== 0) {
+      return setErrors(check);
+    }
+    if (Object.keys(data).length === 0) {
+      return alert("Fill the requied filed");
+    }
 
     return alert("Data submitted !!!");
   };
