@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 // import JsonData from "../api/newForm.json";
 import { validataion } from "../validataion/formValidataion";
 
-const Form = ({ JsonData, data, setData, errors, setErrors, onSubmit }) => {
+const Form = ({ JsonData, data, setData }) => {
   // const [itemList, setItemList] = useState([]);
+  const [errors, setErrors] = useState({});
 
   // const emptyObj = { name: "", price: "", category: "", other: "" };
 
@@ -28,10 +29,12 @@ const Form = ({ JsonData, data, setData, errors, setErrors, onSubmit }) => {
   const inputHandle = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    const newObj = { [name]: value };
+    let newObj = { [name]: value };
     setData({ ...data, ...newObj });
-
-    const check = validataion(newObj);
+    // if(name === "confirm_password"){
+    //   newObj = {}
+    // }
+    const check = validataion(newObj, data);
     if (Object.keys(check).length !== 0) {
       return setErrors({ ...errors, ...check });
     }
@@ -39,8 +42,12 @@ const Form = ({ JsonData, data, setData, errors, setErrors, onSubmit }) => {
     return delete errors[name];
   };
 
- 
-
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const check = validataion(data);
+    if (Object.keys(check).length !== 0) setErrors(check);
+    console.log(check);
+  };
   // const generateID = () => {
   //   if (itemList.length === 0) return 1;
   //   const lastId = itemList?.slice(-1);

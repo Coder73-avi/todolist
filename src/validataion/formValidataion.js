@@ -1,7 +1,7 @@
 import JsonData from "../api/newForm.json";
 
-export const validataion = (data) => {
-  console.log(data);
+export const validataion = (data, allData) => {
+  // console.log(data);
   let errors = {};
   const { inputFiled } = JsonData;
 
@@ -13,7 +13,7 @@ export const validataion = (data) => {
       ?.toUpperCase()
       ?.concat(name.slice(1))
       ?.replaceAll("_", " ");
-    console.log(capitalizeName);
+    // console.log(capitalizeName);
     const findValidataionRequired = inputFiled.find(
       (item) => item?.name === name,
     );
@@ -22,7 +22,7 @@ export const validataion = (data) => {
       // console.log(key, "=>", value);
       const key = validObject[i];
       const value = findValidataionRequired?.valid?.[key];
-      console.log(value);
+      // console.log(value);
       switch (key) {
         case "required":
           if (char === "") {
@@ -55,7 +55,8 @@ export const validataion = (data) => {
           };
           break;
         case "match":
-          const newData = data[name];
+          const newData = allData[value];
+          console.log(data, newData);
           errors = {
             ...errors,
             ...matchData({ name, char, capitalizeName, newData }),
@@ -101,7 +102,7 @@ const charType = ({ name, char, value, capitalizeName }) => {
 };
 
 const matchData = ({ name, char, capitalizeName, newData }) => {
-  console.log("match >> ", newData);
-  if (char === newData) return;
+  // console.log(char, newData);
+  if (char === newData) return {};
   return { [name]: `${capitalizeName} does not match !!!` };
 };

@@ -45,10 +45,6 @@
       "name": "confirm_password",
       "type": "password",
       "valid": {
-        "required": true,
-        "type": "password",
-        "min": 4,
-        "max": 32,
         "match": "password"
       }
     }
