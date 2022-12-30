@@ -60,6 +60,19 @@ const Form = ({ JsonData, data, setData }) => {
   //   return lastId[0]?.id + 1;
   // };
 
+  const resetData = () => {
+    let newObj = {};
+    Object.keys(data).forEach((name) => {
+      return (newObj = { ...newObj, [name]: "" });
+    });
+    setData(newObj);
+    return setErrors(validataion(newObj));
+  };
+
+  const cancelBtn = () => {
+    return alert("Go back Link");
+  };
+
   const ShowError = ({ name }) => {
     if (errors.hasOwnProperty(name)) {
       return <span className={"error_box"}>{errors[name]}</span>;
@@ -103,10 +116,24 @@ const Form = ({ JsonData, data, setData }) => {
 
           <div className="flex flex-row justify-end items-center gap-4">
             <button
+              type="button"
+              onClick={cancelBtn}
+              className="capitalize text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              cancel
+            </button>
+            <button
               type="submit"
               className="capitalize text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               submit
+            </button>
+            <button
+              type="button"
+              onClick={resetData}
+              className="capitalize text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              reset
             </button>
           </div>
         </form>
