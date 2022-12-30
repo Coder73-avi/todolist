@@ -8,7 +8,10 @@ import JsonFormatter from "react-json-formatter";
 // import SingleTodo from "./Components/SingleTodo";
 
 function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    fullname: "abhishek magar",
+    email: "aavishek60@gmail.com",
+  });
   const jsonStyle = {
     propertyStyle: { color: "red" },
     stringStyle: { color: "green" },

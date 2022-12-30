@@ -5,7 +5,7 @@ import { validataion } from "../validataion/formValidataion";
 const Form = ({ JsonData, data, setData }) => {
   // const [itemList, setItemList] = useState([]);
   const [errors, setErrors] = useState({});
-
+  const [newData, setNewData] = useState(data);
   // const emptyObj = { name: "", price: "", category: "", other: "" };
 
   const inputClassName =
@@ -30,11 +30,11 @@ const Form = ({ JsonData, data, setData }) => {
     const name = e.target.name;
     const value = e.target.value;
     let newObj = { [name]: value };
-    setData({ ...data, ...newObj });
+    setNewData({ ...newData, ...newObj });
     // if(name === "confirm_password"){
     //   newObj = {}
     // }
-    const check = validataion(newObj, data);
+    const check = validataion(newObj, newData);
     if (Object.keys(check).length !== 0) {
       return setErrors({ ...errors, ...check });
     }
@@ -44,14 +44,15 @@ const Form = ({ JsonData, data, setData }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const check = validataion(data);
+    const check = validataion(newData);
     if (Object.keys(check).length !== 0) {
       return setErrors(check);
     }
-    if (Object.keys(data).length === 0) {
+    if (Object.keys(newData).length === 0) {
       return alert("Fill the requied filed");
     }
 
+    setData(newData);
     return alert("Data submitted !!!");
   };
   // const generateID = () => {
@@ -62,10 +63,10 @@ const Form = ({ JsonData, data, setData }) => {
 
   const resetData = () => {
     let newObj = {};
-    Object.keys(data).forEach((name) => {
-      return (newObj = { ...newObj, [name]: "" });
+    Object.keys(newData).forEach((name) => {
+      return (newObj = { ...newObj, [name]: data?.[name] || "" });
     });
-    setData(newObj);
+    setNewData(newObj);
     return setErrors(validataion(newObj));
   };
 
@@ -103,7 +104,7 @@ const Form = ({ JsonData, data, setData }) => {
                     type={type}
                     name={name.toLowerCase()}
                     id={name}
-                    value={data?.[name] || ""}
+                    value={newData?.[name] || ""}
                     placeholder={name.replaceAll("_", " ")}
                     className={inputClassName}
                     onChange={inputHandle}
