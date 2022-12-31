@@ -13,11 +13,24 @@ function App() {
     fullname: "abhishek magar",
     email: "aavishek60@gmail.com",
   });
+
   const jsonStyle = {
     propertyStyle: { color: "red" },
     stringStyle: { color: "green" },
     numberStyle: { color: "darkorange" },
   };
+
+  const rowData = [
+    { name: "html", value: "100" },
+    { name: "css", value: "120" },
+    { name: "java script", value: "50" },
+    { name: "React Js", value: "80" },
+    { name: "Next Js", value: "200" },
+    { name: "Node Js", value: "30" },
+    { name: "PHP", value: "50" },
+    { name: "mysql", value: "130" },
+  ];
+
   return (
     <>
       {/* <SingleTodo /> */}
@@ -48,7 +61,8 @@ function App() {
           />
         </div>
       </section> */}
-      <BarCharts />
+
+      <BarCharts row={rowData} numOfCol={6} />
     </>
   );
 }
