@@ -1,0 +1,89 @@
+.container {
+  width: 50%;
+  margin-inline: auto;
+  border: 1px solid gray;
+  padding: 0rem 2rem 5rem 2rem;
+  text-transform: uppercase;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  padding: 3rem;
+}
+
+.col_area {
+  position: relative;
+  color: green;
+  /* border: 1px solid rgb(235, 9, 9); */
+  height: fit-content;
+}
+.col_area::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  content: "";
+  width: 1px;
+  height: 100%;
+  background-color: gray;
+}
+
+.col_data {
+  padding: 2.5rem 0 0 0;
+  border-bottom: 1px solid gray;
+}
+.col_data:first-child {
+  border-top: 1px solid gray;
+  position: relative;
+}
+.col_data:first-child::after {
+  display: block;
+  content: attr(data-last-value);
+  position: absolute;
+  top: 0;
+  left: -5px;
+}
+
+.row_area {
+  padding: 0.5rem 2rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+}
+
+.row_data {
+  position: absolute;
+  bottom: 0;
+  width: 50px;
+  background-color: red;
+}
+.row_data::before {
+  display: block;
+  position: absolute;
+  top: -1.3rem;
+  left: 0.4rem;
+  content: attr(data-value);
+  font-size: 14px;
+  font-weight: 800px;
+  font-family: sans-serif;
+  color: rgb(233, 13, 13);
+  z-index: 100;
+}
+.row_data::after {
+  display: block;
+  position: absolute;
+  bottom: -3rem;
+  left: 0.4rem;
+  transform: rotate(60deg);
+  content: attr(data-name);
+  min-width: fit-content;
+  width: 80px;
+  font-size: 12px;
+  font-weight: 600px;
+  font-family: sans-serif;
+  color: rgb(7, 36, 56);
+  z-index: 100;
+}

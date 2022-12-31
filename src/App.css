@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .error_box {
   font-size: 12px;
   color: rgb(221, 20, 20);
